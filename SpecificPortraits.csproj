@@ -6,7 +6,7 @@
     <RootNamespace>SpecificPortraits</RootNamespace>
     <LangVersion>preview</LangVersion>
     <Nullable>disable</Nullable>
-    <Version>0.11.1</Version>
+    <Version>0.12.0</Version>
     <DebugType>none</DebugType>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>

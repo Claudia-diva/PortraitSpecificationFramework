@@ -75,12 +75,40 @@ namespace SpecificPortraits
             Toggle(pools, "Reroll line in dialogue", SpecificPortraits.EnableRerollDialog,
                 "Adds \"Reroll your portrait\" to NPC dialogue.\nNot shown for unique characters.");
 
+            OptVLayout picker = root.AddVLayoutWithBorder("Picker");
+            Toggle(picker, "Lock characters picked by hand", SpecificPortraits.LockOnPick,
+                "Picking or resetting a portrait locks the character.\nLocked characters are skipped by rerolls and zone changes.");
+            Toggle(picker, "Reroll Entire Map skips party members", SpecificPortraits.RerollMapSkipsParty, "");
+            Toggle(picker, "Reroll Entire Map skips pets", SpecificPortraits.RerollMapSkipsPets, "");
+            SliderInt(picker, "Names in pool preview", SpecificPortraits.PreviewNames, 5f, 500f, 5f);
+
+            OptVLayout window = root.AddVLayoutWithBorder("Window");
+            Toggle(window, "On-screen portrait counter", SpecificPortraits.ShowScrollCounter, "Shows 13-24 / 892 in the corner of each grid.");
+            Toggle(window, "Names on hover", SpecificPortraits.ShowHoverNames, "");
+            Toggle(window, "Character name buttons", SpecificPortraits.ShowCharacterNames, "A name button under each character in the picker.");
+            SliderInt(window, "Columns (0 = automatic)", SpecificPortraits.GridColumns, 0f, 12f, 1f);
+            SliderInt(window, "Minimum cell width", SpecificPortraits.MinCellWidth, 60f, 400f, 10f);
+            SliderInt(window, "Cell spacing", SpecificPortraits.GridSpacing, 0f, 40f, 1f);
+            SliderInt(window, "Window width", SpecificPortraits.WindowWidth, 800f, 3000f, 50f);
+            SliderInt(window, "Window height", SpecificPortraits.WindowHeight, 500f, 2000f, 50f);
+
             OptVLayout tools = root.AddVLayoutWithBorder("Tools");
             OptButton open = tools.AddButton("Open Portrait Tools",
                 "Portrait picker, pool editor and settings.\nNeeds a loaded game and the YK Framework mod.");
             open.OnClicked += OpenTools;
 
             root.AddText(" ", (TextAnchor)4, 20);
+        }
+
+        static void SliderInt(OptLayout parent, string label, ConfigEntry<int> cfg, float min, float max, float step)
+        {
+            OptSlider s = parent.AddSlider(label + " (" + cfg.Value + ")", sideButtons: true, min, max, cfg.Value);
+            s.Step = step;
+            s.OnValueChanged += delegate (float v)
+            {
+                cfg.Value = (int)Math.Round(v);
+                s.Title = label + " (" + cfg.Value + ")";
+            };
         }
 
         static void Toggle(OptLayout parent, string label, ConfigEntry<bool> cfg, string tip)

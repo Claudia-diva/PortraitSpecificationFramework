@@ -17,7 +17,9 @@ Open the tools menu in game (the wrench on the menu bar), then **mod > Portrait 
 
 - **Portrait Picker**: click a character on the left and a portrait on the right to assign it. A portrait you pick is locked: map rerolls and zone changes leave it alone. *Reset Portrait* removes the portrait and locks the character too. *Lock / Unlock Selection* toggles the lock. *Reroll Selection* unlocks and draws a new portrait from the matching pools. *Reroll Entire Map* rerolls everyone except locked characters, party members and pets. The search fields filter both lists as you type.
 - **Portrait Pool Links**: choose a package in the mod filter, select portraits, set the filters (type, gender, race, id, job, age) and press *Add selection to pool*. *Preview matches on this map* lists the characters the current filter would apply to. Selected portraits list the pools they already belong to; click a pool to remove them from it. *Save pools to link file* writes the pools to disk. Closing the window with unsaved edits asks whether to save them.
-- **Settings**: the reroll line in dialogue, whether default portraits are mixed into pools, and a random portrait for characters nothing matches. The same settings appear in the Mod Options menu when that mod is installed.
+- **Settings**: the reroll line in dialogue, whether default portraits are mixed into pools, a random portrait for characters nothing matches, the picker's lock and reroll rules, and what the window shows. The same settings appear in the Mod Options menu when that mod is installed.
+
+Layout settings live in `BepInEx/config/SpecificPortraits.cfg` and in Mod Options: window width and height, portrait columns (0 = as many as fit), minimum cell width, cell spacing, the on-screen counter, hover names and character name buttons. Grid changes apply while the window is open; the window size applies when it is reopened.
 
 Pool types: `c` for ordinary people, `guard`, `foxfolk`, `special`, or `all`. A pool made for a specific character id wins over broader pools. Age limits are inclusive; leave them at 0 for no limit.
 

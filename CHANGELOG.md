@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.12.0 - 2026-10-11
+
+- Portrait grids size themselves to the space they get. Columns, minimum cell width and spacing are settings, with 0 columns meaning as many as fit.
+- Each grid shows which portraits are on screen, such as 13-24 / 892, in its corner.
+- Window size is a setting.
+- Picker settings: whether a hand-picked portrait locks the character, and whether Reroll Entire Map skips party members and pets.
+- Hover names, the on-screen counter and the character name buttons can be turned off. Long character names shrink to fit their button.
+- All settings are in the BepInEx config, in Mod Options, and the on/off ones in the Settings tab.
+
 ## 0.11.1 - 2026-10-06
 
 Works with Elin EA 23.352.

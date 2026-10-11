@@ -107,22 +107,18 @@ namespace SpecificPortraits.UI
             {
                 portraitSelectorView?.ClearSelection();
             }), 220f);
-            TabPicker.FixedWidth(header.Text("ポートレート検索"._("Find portrait")), 130f);
-            var search = TabPicker.FixedWidth(header.InputText(""), 320f);
+            TabPicker.Gap(header, 30f);
+            var search = TabPicker.SearchField(header, "ポートレート検索"._("Find portrait"));
             search.field.onValueChanged.AddListener(v => portraitSelectorView?.Filter(v));
 
             hoverText = Text(" ");
             #endregion
 
-            YKGrid gridLayoutMain = TabPicker.PaneGrid(this, 680f);
+            YKGrid gridLayoutMain = TabPicker.PaneGrid(this, Mathf.Max(300f, SpecificPortraits.WindowHeight.Value - 120f));
 
             #region portrait picker
             portraitSelectorView = new ViewPortraitSelector(this, filterDropdownMod, gridLayoutMain);
-            portraitSelectorView.OnHover = label =>
-            {
-                if (hoverText != null)
-                    hoverText.text = label ?? "";
-            };
+            portraitSelectorView.OnHover = label => TabPicker.ShowHover(hoverText, label);
             #endregion
 
             #region selection
@@ -215,7 +211,7 @@ namespace SpecificPortraits.UI
                     previewText.text = "ゲームをロードしてください"._("Load a game to preview.");
                     return;
                 }
-                var names = matches.Select(c => c.Name).Distinct().Take(40).ToList();
+                var names = matches.Select(c => c.Name).Distinct().Take(SpecificPortraits.PreviewNames.Value).ToList();
                 var head = ("一致するキャラクター"._("Matching characters")) + $" ({matches.Count})";
                 previewText.text = matches.Count == 0
                     ? head + ": " + ("なし"._("none"))

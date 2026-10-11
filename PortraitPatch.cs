@@ -66,7 +66,8 @@ namespace SpecificPortraits
                 c.SetPortraitOverride(null);
             else if (c.GetIdPortrait() != id)
                 c.SetPortraitOverride(id);
-            SetLocked(c, true);
+            if (SpecificPortraits.LockOnPick.Value)
+                SetLocked(c, true);
         }
 
         /// <summary>Remove the portrait and lock the character so nothing hands out a new one.</summary>

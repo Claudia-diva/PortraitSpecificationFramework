@@ -6,7 +6,7 @@ namespace SpecificPortraits.UI
     public class PSFLayerMain : YKLayer<object>
     {
         public override string Title { get; } = "ポートレート ツール"._("Portrait Tools");
-        public override Rect Bound { get; } = new Rect(0.0f, 0.0f, 1400f, 800f);
+        public override Rect Bound => new Rect(0f, 0f, SpecificPortraits.WindowWidth.Value, SpecificPortraits.WindowHeight.Value);
 
         public override void OnLayout()
         {

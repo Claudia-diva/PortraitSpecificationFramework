@@ -18,7 +18,7 @@ namespace SpecificPortraits
     {
         public const string pluginGuid = "SpecificPortraits";
         public const string pluginName = "Specific Portraits";
-        public const string pluginVersion = "0.11.1";
+        public const string pluginVersion = "0.12.0";
 
         /// <summary>Local package that keeps the player's pool links across updates of this mod.</summary>
         public const string SettingsPackageName = "Mod_Specific_Portraits_Settings";
@@ -47,6 +47,51 @@ namespace SpecificPortraits
         public static ConfigEntry<bool> EnableRerollDialog { get; set; }
         public static ConfigEntry<bool> AlwaysIncludeVanillaPortraits { get; set; }
         public static ConfigEntry<bool> RandomizePortraitOnNoResults { get; set; }
+
+        // Window and grids
+        public static ConfigEntry<int> WindowWidth { get; set; }
+        public static ConfigEntry<int> WindowHeight { get; set; }
+        public static ConfigEntry<int> GridColumns { get; set; }
+        public static ConfigEntry<int> MinCellWidth { get; set; }
+        public static ConfigEntry<int> GridSpacing { get; set; }
+        public static ConfigEntry<bool> ShowScrollCounter { get; set; }
+        public static ConfigEntry<bool> ShowHoverNames { get; set; }
+        public static ConfigEntry<bool> ShowCharacterNames { get; set; }
+
+        // Picker behaviour
+        public static ConfigEntry<bool> LockOnPick { get; set; }
+        public static ConfigEntry<bool> RerollMapSkipsParty { get; set; }
+        public static ConfigEntry<bool> RerollMapSkipsPets { get; set; }
+        public static ConfigEntry<int> PreviewNames { get; set; }
+
+        void BindLayoutAndPickerSettings()
+        {
+            WindowWidth = Config.Bind("Window", "WindowWidth", 1400,
+                new ConfigDescription("Width of the Portrait Tools window.\nApplies the next time it opens.", new AcceptableValueRange<int>(800, 3000)));
+            WindowHeight = Config.Bind("Window", "WindowHeight", 800,
+                new ConfigDescription("Height of the Portrait Tools window.\nApplies the next time it opens.", new AcceptableValueRange<int>(500, 2000)));
+            GridColumns = Config.Bind("Window", "GridColumns", 0,
+                new ConfigDescription("Portrait columns per grid.\n0 = as many as fit the minimum cell width.", new AcceptableValueRange<int>(0, 12)));
+            MinCellWidth = Config.Bind("Window", "MinCellWidth", 130,
+                new ConfigDescription("Smallest portrait cell when columns are automatic.\nBigger value = fewer, larger portraits.", new AcceptableValueRange<int>(60, 400)));
+            GridSpacing = Config.Bind("Window", "GridSpacing", 6,
+                new ConfigDescription("Gap between portrait cells.", new AcceptableValueRange<int>(0, 40)));
+            ShowScrollCounter = Config.Bind("Window", "ShowScrollCounter", true,
+                "Show which portraits are on screen, like 13-24 / 892,\nin the corner of each grid.");
+            ShowHoverNames = Config.Bind("Window", "ShowHoverNames", true,
+                "Show the name of the portrait or character under the mouse.");
+            ShowCharacterNames = Config.Bind("Window", "ShowCharacterNames", true,
+                "Show a name button under each character in the picker.");
+
+            LockOnPick = Config.Bind("Picker", "LockOnPick", true,
+                "Picking or resetting a portrait by hand locks the character.\nLocked characters are skipped by rerolls and zone changes.");
+            RerollMapSkipsParty = Config.Bind("Picker", "RerollMapSkipsParty", true,
+                "Reroll Entire Map leaves party members alone.");
+            RerollMapSkipsPets = Config.Bind("Picker", "RerollMapSkipsPets", true,
+                "Reroll Entire Map leaves pets and other minions alone.");
+            PreviewNames = Config.Bind("Pools", "PreviewNames", 40,
+                new ConfigDescription("How many character names the pool preview lists.", new AcceptableValueRange<int>(5, 500)));
+        }
         /// <summary>The plugin object; hosts coroutines that must outlive hidden UI tabs.</summary>
         public static SpecificPortraits Instance { get; private set; }
 
@@ -80,6 +125,8 @@ namespace SpecificPortraits
                 "Mix the game's default portraits into every pool.\n" +
                 "On: default portraits can be picked alongside linked ones.\n" +
                 "Off: default portraits are only used when no pool matches.");
+
+            BindLayoutAndPickerSettings();
 
             EnsureSettingsPackage();
 
